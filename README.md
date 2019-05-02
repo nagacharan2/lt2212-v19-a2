@@ -2,17 +2,9 @@
 
 From Asad Sayeed's statistical NLP course at the University of Gothenburg.
 
-My name: YOUR NAME HERE
+My name: NAGA CHARAN MEDA
 
-## Additional instructions
 
-Document here additional command-line instructions or other details you
-want us to know about running your code.
-
-## File naming convention
-
-(Delete this section if it's fairly obvious what output file was
-created with what parameters.)
 
 ## Results and discussion
 
@@ -30,6 +22,3 @@ sentence or less.)
 
 ### Discussion of trends in results in light of the hypothesis
 
-## Bonus answers
-
-(Delete if you're not answering the bonus.)
