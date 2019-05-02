@@ -31,7 +31,6 @@ def load_data(folder):
         category_list.append(subdir)
         article_name =[]
         article_data = []
-        print(subdir)
         for file in sorted(os.listdir(subdir)):
             if file.endswith('.txt'):
                 file_path = os.path.join(subdir,file)
