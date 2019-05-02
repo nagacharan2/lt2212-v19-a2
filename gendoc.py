@@ -71,16 +71,16 @@ if __name__ == "__main__":
     parser.add_argument("-B", "--base-vocab", metavar="M", dest="basedims",
                         type=int, default=0,
                         help="Use the top M dims from the raw counts before further processing")
-    parser.add_argument("-foldername", type=str, default='/Users/nagacharan/Documents/NLP/Statistical Methods/lt2212-v19-a2/reuters-topics',
+    parser.add_argument("foldername", type=str, #default='/Users/nagacharan/Documents/NLP/Statistical Methods/lt2212-v19-a2/reuters-topics',
                         help="The base folder name containing the two topic subfolders.")
-    parser.add_argument("-outputfile", type=str, default="new.txt",
+    parser.add_argument("outputfile", type=str, #default="new.txt",
                         help="The name of the output file for the matrix data.")
 
     args = parser.parse_args()
 
     print("Loading data from directory {}.".format(args.foldername))
     foldername = args.foldername 
-
+    filename = args.outputfile
 
     all_data = load_data(foldername)
     only_text = [] 
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
     X = vect.fit_transform(clean_text) 
     count_vect_df = pd.DataFrame(X.todense(),index = all_filenames, columns=vect.get_feature_names())
-    export_csv = count_vect_df.to_csv(foldername+'/text.csv') #Don't forget to add '.csv' at the end of the path
+    export_csv = count_vect_df.to_csv(foldername+'/'+filename +'_vector.csv') #Don't forget to add '.csv' at the end of the path
 
     if args.tfidf:
         print("Applying tf-idf to raw counts.")
@@ -112,7 +112,7 @@ if __name__ == "__main__":
             tfidvect = TfidfVectorizer(max_features = None)
         Y = tfidvect.fit_transform(clean_text) 
         tfid_vect_df = pd.DataFrame(Y.todense(),index = all_filenames, columns=tfidvect.get_feature_names())
-        export_csv = tfid_vect_df.to_csv(foldername+'/text_tfdf.csv') #Don't forget to add '.csv' at the end of the path
+        export_csv = tfid_vect_df.to_csv(foldername+ '/'+filename +'_tfidf_vector.csv') #Don't forget to add '.csv' at the end of the path
 
     if args.svddims:
         print("Truncating matrix to {} dimensions via singular value decomposition.".format(args.svddims))
@@ -121,10 +121,10 @@ if __name__ == "__main__":
             if args.tfidf:
                 Z = svdvect.fit_transform(Y)
                 svd_tf_df = pd.DataFrame(Z,index = all_filenames, columns =[i for i in  range(0,args.svddims)])
-                export_csv = svd_tf_df.to_csv(foldername+'/text_tfdf_svd.csv') #Don't forget to add '.csv' at the end of the path
+                export_csv = svd_tf_df.to_csv(foldername+'/'+filename +'_tfidf_svd.csv') #Don't forget to add '.csv' at the end of the path
             U = svdvect.fit_transform(X)
             svd_df = pd.DataFrame(U,index = all_filenames, columns =[i for i in  range(0,args.svddims)])
-            export_csv = svd_df.to_csv(foldername+'/text_vec_svd.csv') #Don't forget to add '.csv' at the end of the path
+            export_csv = svd_df.to_csv(foldername+'/'+filename +'_vector_svd.csv') #Don't forget to add '.csv' at the end of the path
 
 
     print("Writing matrix to {}.".format(args.outputfile))
